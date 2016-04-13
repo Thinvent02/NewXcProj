@@ -22,9 +22,9 @@
 #define NAVBAR_CHANGE_POINT 0.0
 #define ScrollerFrameY  0.0
 #define ScrollerContentSizeHeight   (HEIGHT-49.0-64.0)
-@interface ProfileViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface ProfileViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property(nonatomic,strong)UITableView*profileTable;
-@property (nonatomic,weak)UIButton *headerView;
+@property (nonatomic,strong)UIButton *headerView;
 @property (nonatomic,weak)UIView *topView;
 @property (nonatomic,weak)UIView *grayImageView;
 @property (weak ,nonatomic) UIButton *btnIcon;
@@ -141,25 +141,26 @@
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH, 175)];
     self.topView = topView;
     topView.userInteractionEnabled=YES;
-    UIButton *  headerView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, WIDTH, 175)]; ;
+    _headerView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, WIDTH, 175)]; ;
     UIImage *hoderImage = [UIImage imageNamed:@"mine_bg.jpg"];
    
-    self.headerView = headerView;
-    [headerView setImage:hoderImage forState:UIControlStateNormal];
+//    self.headerView = headerView;
+    [_headerView setImage:hoderImage forState:UIControlStateNormal];
     //图片上的灰色梦层
-    UIImageView* grayImageView = [[UIImageView alloc] initWithFrame:headerView.bounds];
+    UIImageView* grayImageView = [[UIImageView alloc] initWithFrame:_headerView.bounds];
     grayImageView.image = [UIImage resizedImageWithName:@"bg_mc"];
     self.grayImageView = grayImageView;
-    [headerView addSubview:grayImageView];
+    [_headerView addSubview:grayImageView];
     
     
-    [headerView addTarget:self action:@selector(changeTopHeaderView) forControlEvents:UIControlEventTouchUpInside];
+    [_headerView addTarget:self action:@selector(changeTopHeaderView) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.topView addSubview:headerView];
+    [self.topView addSubview:_headerView];
     UIButton*setBtn=[[UIButton alloc]initWithFrame:CGRectMake(WIDTH-40, 10, 30, 30)];
     [setBtn addTarget:self action:@selector(BtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [setBtn setBackgroundImage:[UIImage imageNamed:@"Settings"] forState:UIControlStateNormal];
     [self.topView addSubview:setBtn];
+    [self.topView bringSubviewToFront:setBtn];
     UIButton*headImage=[[UIButton alloc]initWithFrame:CGRectMake((topView.width-70)/2, (topView.height-70)/2, 70, 70)];
     headImage.backgroundColor=[UIColor redColor];
     [headImage setBackgroundImage:[UIImage imageNamed:@"custPic_default"] forState:UIControlStateNormal];
@@ -197,8 +198,57 @@
 }
 -(void)changeTopHeaderView
 {
-//    NSLog(@"789");
+    UIActionSheet *choiceSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:@"取消"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"拍照", @"从相册中选取", nil];
+    [choiceSheet showInView:_headerView];
+
 }
+#pragma mark - UIActionSheetDelegate
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+        if (![UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
+            sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        }
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.allowsEditing=YES;
+        picker.sourceType = sourceType;
+        [self presentViewController:picker animated:YES completion:nil];
+        
+    }else if (buttonIndex == 1)
+    {
+        //先设定sourceType为相机，然后判断相机是否可用（ipod）没相机，不可用将sourceType设定为相片库
+        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        if (![UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypePhotoLibrary]) {
+            sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        }
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.allowsEditing=YES;
+        picker.sourceType = sourceType;
+        [self presentViewController:picker animated:YES completion:nil];
+    }
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    UIImage *imageLicence = [info objectForKey:@"UIImagePickerControllerEditedImage"];
+    [_headerView setImage:imageLicence forState:UIControlStateNormal];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
 -(void)gotoBasicInfo
 {
     

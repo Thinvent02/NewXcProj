@@ -1188,7 +1188,7 @@
 				TargetAttributes = {
 					962C56A61CBE42580089F758 = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = X2HCBWGAL5;
+						DevelopmentTeam = XQYDMB7746;
 					};
 					962C56BF1CBE42580089F758 = {
 						CreatedOnToolsVersion = 7.3;
@@ -1542,8 +1542,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/NewXcProj/XcPrefixHeader.pch";
 				INFOPLIST_FILE = NewXcProj/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.JaosnQJl.NewXcProj;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JaosnQJl.NewXcProj21;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1558,8 +1559,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/NewXcProj/XcPrefixHeader.pch";
 				INFOPLIST_FILE = NewXcProj/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.JaosnQJl.NewXcProj;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JaosnQJl.NewXcProj21;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1630,6 +1632,7 @@
 				962C56D61CBE42580089F758 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		962C56D71CBE42580089F758 /* Build configuration list for PBXNativeTarget "NewXcProjTests" */ = {
 			isa = XCConfigurationList;
@@ -1638,6 +1641,7 @@
 				962C56D91CBE42580089F758 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		962C56DA1CBE42580089F758 /* Build configuration list for PBXNativeTarget "NewXcProjUITests" */ = {
 			isa = XCConfigurationList;
@@ -1646,6 +1650,7 @@
 				962C56DC1CBE42580089F758 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

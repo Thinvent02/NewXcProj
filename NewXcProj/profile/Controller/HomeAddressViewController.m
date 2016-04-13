@@ -19,9 +19,20 @@
     [super viewDidLoad];
     self.title=@"我的家庭住址";
     self.view.backgroundColor=[UIColor redColor];
+    UIButton *btn = [[UIButton alloc] init];
+    [btn setBackgroundImage:[UIImage imageNamed:@"undo"] forState:UIControlStateNormal];
+    [btn setBackgroundImage:[UIImage imageNamed:@"undo"] forState:UIControlStateHighlighted];
+    btn.frame = CGRectMake(0, 0, btn.currentBackgroundImage.size.width, btn.currentBackgroundImage.size.width);
+    [btn addTarget:self action:@selector(btnClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+
     // Do any additional setup after loading the view.
 }
-
+-(void)btnClick
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
